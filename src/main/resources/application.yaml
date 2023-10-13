@@ -14,11 +14,11 @@ spring:
       ddl-auto: update
     show-sql: true
     open-in-view: true
-  rabbitmq:
-    host: armadillo.rmq.cloudamqp.com
-    port: 5672
-    username: ynpktdgu
-    password: 3sU73Ks3p2X7Yld2gqyP5GblOTpCDWR1
+#  rabbitmq:
+#    host: armadillo.rmq.cloudamqp.com
+#    port: 5672
+#    username: ynpktdgu
+#    password: 3sU73Ks3p2X7Yld2gqyP5GblOTpCDWR1
 
 #rabbit:
 #  queue:
