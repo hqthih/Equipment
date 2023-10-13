@@ -98,7 +98,6 @@ public class ManageEquipmentApplication {
     BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 //    @Bean
 //    CommandLineRunner run(UserService userService) {
 //        return args -> {
@@ -124,5 +123,6 @@ public class ManageEquipmentApplication {
 //            userService.addRoleToStudent("hqdat08092001@gmail.com", "USER");
 //        };
 //    }
+
 
 }
