@@ -20,15 +20,15 @@ spring:
     username: ynpktdgu
     password: 3sU73Ks3p2X7Yld2gqyP5GblOTpCDWR1
 
-rabbit:
-  queue:
-    save_request: save_request
-    push_notification: push_notification
-  exchange:
-    manage_equipment: manage_equipment
-  routing:
-    save_request: save_request_routing_key
-    push_notification: push_notification_routing_key
+#rabbit:
+#  queue:
+#    save_request: save_request
+#    push_notification: push_notification
+#  exchange:
+#    manage_equipment: manage_equipment
+#  routing:
+#    save_request: save_request_routing_key
+#    push_notification: push_notification_routing_key
 #
 #server:
 #  port: 9090
