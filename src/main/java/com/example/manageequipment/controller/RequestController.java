@@ -1,7 +1,7 @@
 package com.example.manageequipment.controller;
 
 import com.example.manageequipment.dto.RequestDto;
-//import com.example.manageequipment.publisher.RabbitMQProducer;
+import com.example.manageequipment.publisher.RabbitMQProducer;
 import com.example.manageequipment.service.RequestService;
 import com.example.manageequipment.type.IntegerArrayRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +18,15 @@ public class RequestController {
     @Autowired
     private RequestService requestService;
 
-//    @Autowired
-//    private RabbitMQProducer producer;
-//
-//    @PostMapping("/create-request")
-//    @PreAuthorize("hasAnyAuthority('USER')")
-//    public ResponseEntity<String> createRequestEquipment(@RequestBody RequestDto requestDto) {
-//        producer.sendMessage(requestDto);
-//        return ResponseEntity.ok("Request is sent to Admin!!");
-//    }
+    @Autowired
+    private RabbitMQProducer producer;
+
+    @PostMapping("/create-request")
+    @PreAuthorize("hasAnyAuthority('USER')")
+    public ResponseEntity<String> createRequestEquipment(@RequestBody RequestDto requestDto) {
+        producer.sendMessage(requestDto);
+        return ResponseEntity.ok("Request is sent to Admin!!");
+    }
 
     @GetMapping("/get-request-by-user/{userId}")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
