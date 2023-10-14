@@ -57,13 +57,13 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role = null;
 
-    @OneToMany(mappedBy = "userOwner")
-    @JsonIgnore
-    private Set<Request> requests = new HashSet<>();
-
-    @OneToMany(mappedBy = "userOwner")
-    @JsonIgnore
-    private Set<Notification> notifications = new HashSet<>();
+//    @OneToMany(mappedBy = "userOwner")
+//    @JsonIgnore
+//    private Set<Request> requests = new HashSet<>();
+//
+//    @OneToMany(mappedBy = "userOwner")
+//    @JsonIgnore
+//    private Set<Notification> notifications = new HashSet<>();
 
     @Override
     @JsonDeserialize(using = CustomAuthorityDeserializer.class)

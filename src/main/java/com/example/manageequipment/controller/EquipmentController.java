@@ -70,10 +70,10 @@ public class EquipmentController {
         return new ResponseEntity<>(equipmentService.requestEquipment(equipmentIds.getIds(), userId), HttpStatus.OK);
     }
 
-    @GetMapping("/get-by-category/{categoryId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<List<EquipmentDto>> getEquipmentByCategoryId(@PathVariable Long categoryId) {
-        return new ResponseEntity<>(equipmentService.getEquipmentByCategoryId(categoryId), HttpStatus.OK);
-    }
+//    @GetMapping("/get-by-category/{categoryId}")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
+//    public ResponseEntity<List<EquipmentDto>> getEquipmentByCategoryId(@PathVariable Long categoryId) {
+//        return new ResponseEntity<>(equipmentService.getEquipmentByCategoryId(categoryId), HttpStatus.OK);
+//    }
 }
 

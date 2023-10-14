@@ -26,5 +26,5 @@ public interface EquipmentService {
 
     UserDto requestEquipment(List<Long> ids, Long userId);
 
-    List<EquipmentDto> getEquipmentByCategoryId(Long categoryId);
+//    List<EquipmentDto> getEquipmentByCategoryId(Long categoryId);
 }
