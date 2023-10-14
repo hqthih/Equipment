@@ -4,10 +4,10 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.manageequipment.dto.EquipmentDto;
 import com.example.manageequipment.dto.UserDto;
-//import com.example.manageequipment.model.Category;
+import com.example.manageequipment.model.Category;
 import com.example.manageequipment.model.Equipment;
 import com.example.manageequipment.model.User;
-//import com.example.manageequipment.repository.CategoryRepository;
+import com.example.manageequipment.repository.CategoryRepository;
 import com.example.manageequipment.repository.EquipmentRepository;
 import com.example.manageequipment.repository.UserRepository;
 import com.example.manageequipment.service.EquipmentService;
@@ -37,9 +37,9 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Autowired
     private UserServiceImpl userService;
-//
-//    @Autowired
-//    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
 
     public EquipmentDto mapToDto(Equipment equipment) {
@@ -47,12 +47,12 @@ public class EquipmentServiceImpl implements EquipmentService {
         equipmentDto.setId(equipment.getId());
         equipmentDto.setName(equipment.getName());
         equipmentDto.setImageUrl(equipment.getImageUrl());
-//        if (equipment.getType() == null) {
-//            equipmentDto.setType(null);
-//        } else {
-//            equipmentDto.setType(equipment.getType().getId());
-//
-//        }
+        if (equipment.getType() == null) {
+            equipmentDto.setType(null);
+        } else {
+            equipmentDto.setType(equipment.getType().getId());
+
+        }
         equipmentDto.setDescription(equipment.getDescription());
 
         if (equipment.getOwner() != null) {
@@ -89,8 +89,8 @@ public class EquipmentServiceImpl implements EquipmentService {
             newEquipment.setImageUrl(imgUrl);
             newEquipment.setDescription(equipmentDto.getDescription());
 
-//            Category category = categoryRepository.findById(equipmentDto.getType()).get();
-//            newEquipment.setType(category);
+            Category category = categoryRepository.findById(equipmentDto.getType()).get();
+            newEquipment.setType(category);
 
             Equipment equipmentCreated = equipmentRepository.save(newEquipment);
 
@@ -100,11 +100,11 @@ public class EquipmentServiceImpl implements EquipmentService {
             newEquipment.setName(equipmentDto.getName());
 
             if (equipmentDto.getType() != null){
-//                Category category = categoryRepository.findById(equipmentDto.getType()).get();
+                Category category = categoryRepository.findById(equipmentDto.getType()).get();
 
                 newEquipment.setDescription(equipmentDto.getDescription());
 
-//                newEquipment.setType(category);
+                newEquipment.setType(category);
                 Equipment equipmentCreated = equipmentRepository.save(newEquipment);
 
                 EquipmentDto newEquipmentDto = mapToDto(equipmentCreated);

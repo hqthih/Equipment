@@ -37,10 +37,10 @@ public class Equipment {
     @JsonIgnore
     private Set<User> transferredUser = new HashSet<>();
 
-//    @ManyToOne
-//    @JsonIgnore
-//    @JoinColumn(name = "category_id", referencedColumnName = "id")
-//    private Category type = null;
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category type = null;
 
     @Override
     public String toString() {
