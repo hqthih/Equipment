@@ -26,6 +26,7 @@ public class RabbitMQProducer {
     }
 
     public void sendMessage(RequestDto message) {
+        System.out.println("connection from RabbitMQProducer");
         requestService.createRequestEquipment(message);
 
         ConnectionFactory connectionFactory = RabbitConfig.getConnection();
@@ -38,11 +39,11 @@ public class RabbitMQProducer {
         template.setMessageConverter(new Jackson2JsonMessageConverter());
 
         template.convertAndSend("equipment_exchange", "push_notification_key", message);
-        try{
-            Thread.sleep(1000);
-        } catch(InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+//        try{
+//            Thread.sleep(1000);
+//        } catch(InterruptedException e) {
+//            Thread.currentThread().interrupt();
+//        }
 
         container.stop();
     }

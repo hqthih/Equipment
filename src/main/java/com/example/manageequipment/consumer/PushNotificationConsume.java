@@ -12,6 +12,7 @@ import com.example.manageequipment.service.RequestService;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class PushNotificationConsume implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
+        System.out.println("connection from Consume");
         Role role = roleCustomRepo.findByName("ADMIN").get();
 
         List<User> listUserAdmin = userRepository.findByRole(role);
@@ -65,5 +67,7 @@ public class PushNotificationConsume implements MessageListener {
                 throw new RuntimeException(e);
             }
         });
+
+        ConnectionFactory connectionFactory = RabbitConfig.getConnection();
     }
 }

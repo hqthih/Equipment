@@ -18,6 +18,7 @@ public class RabbitMQListenerConfig {
 
     @Bean
     public SimpleMessageListenerContainer messageListenerContainer() {
+        System.out.println("connection from ListenerConfig");
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(RabbitConfig.getConnection());
         container.setQueueNames("push_notification_queue"); // Queue(s) to listen to

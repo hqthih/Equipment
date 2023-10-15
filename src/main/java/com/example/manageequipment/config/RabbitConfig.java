@@ -38,6 +38,7 @@ public class RabbitConfig {
 
     @Bean
     public static ConnectionFactory getConnection() {
+        System.out.println("connection from RabbitMQConfig");
 
         // set up the connection
         CachingConnectionFactory connectionFactory=new CachingConnectionFactory ("octopus.rmq3.cloudamqp.com");
