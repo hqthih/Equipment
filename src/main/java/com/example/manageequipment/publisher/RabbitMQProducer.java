@@ -1,6 +1,7 @@
 package com.example.manageequipment.publisher;
 
 import com.example.manageequipment.dto.RequestDto;
+import com.example.manageequipment.service.RequestService;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RabbitMQProducer {
+    
+    @Autowired
+    private RequestService requestService;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -19,11 +23,7 @@ public class RabbitMQProducer {
     }
 
     public void sendMessage(RequestDto message) {
-//        requestService.createRequestEquipment(message);
-//
-//        rabbitTemplate.convertAndSend(exchange, rabbitMQConfig.push_notification_routingKey, message);
-
-
+        requestService.createRequestEquipment(message);
         CachingConnectionFactory connectionFactory=new CachingConnectionFactory ("armadillo.rmq.cloudamqp.com");
         connectionFactory.setUsername("ynpktdgu");
         connectionFactory.setPassword("3sU73Ks3p2X7Yld2gqyP5GblOTpCDWR1");

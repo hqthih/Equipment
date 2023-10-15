@@ -35,14 +35,14 @@ public class CategoryServiceImpl implements CategoryService {
         return newCategory;
     }
 
-    @Override
-    public List<CategoryDto> getCategoryName() {
+//    @Override
+//    public List<CategoryDto> getCategoryName() {
 //        List<CategoryDto> listCategory = categoryRepository.getNameOfCategory();
-
-        System.out.println();
-
-        return null;
-    }
+//
+//        System.out.println();
+//
+//        return null;
+//    }
 
     @Override
     public Category updateCategory(Category newCategory) {

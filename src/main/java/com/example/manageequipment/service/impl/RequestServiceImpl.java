@@ -57,9 +57,11 @@ public class RequestServiceImpl implements RequestService {
     public RequestDto createRequestEquipment(RequestDto requestDto) {
         Request request = new Request();
 
-        User user = userRepository.findById(requestDto.getUserId()).get();
+        User user = userRepository.findById(requestDto.getUserId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid user id "));
 
-        Category category = categoryRepository.findById(requestDto.getRequestEquipmentTypeId()).get();
+        Category category = categoryRepository.findById(requestDto.getRequestEquipmentTypeId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid category id "));
 
         request.setDescription(requestDto.getDescription());
         request.setUserOwner(user);
