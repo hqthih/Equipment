@@ -31,10 +31,9 @@ public class RabbitMQProducer {
 
         ConnectionFactory connectionFactory = RabbitConfig.getConnection();
         //Set up the listener
-        SimpleMessageListenerContainer container =
-                new SimpleMessageListenerContainer(connectionFactory);
+//        SimpleMessageListenerContainer container =
+//                new SimpleMessageListenerContainer(connectionFactory);
         //Send a message
-
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(new Jackson2JsonMessageConverter());
 
@@ -46,6 +45,6 @@ public class RabbitMQProducer {
 //        }
 
         template.stop();
-        container.stop();
+//        container.stop();
     }
 }
