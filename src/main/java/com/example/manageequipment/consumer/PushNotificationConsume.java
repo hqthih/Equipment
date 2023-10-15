@@ -67,7 +67,5 @@ public class PushNotificationConsume implements MessageListener {
                 throw new RuntimeException(e);
             }
         });
-
-        ConnectionFactory connectionFactory = RabbitConfig.getConnection();
     }
 }

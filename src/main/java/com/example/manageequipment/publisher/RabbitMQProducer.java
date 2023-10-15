@@ -45,6 +45,7 @@ public class RabbitMQProducer {
 //            Thread.currentThread().interrupt();
 //        }
 
+        template.stop();
         container.stop();
     }
 }
