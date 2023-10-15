@@ -1,13 +1,16 @@
 package com.example.manageequipment.publisher;
 
+import com.example.manageequipment.config.RabbitConfig;
 import com.example.manageequipment.dto.RequestDto;
 import com.example.manageequipment.service.RequestService;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.ConnectableFlux;
 
 @Service
 public class RabbitMQProducer {
@@ -24,10 +27,8 @@ public class RabbitMQProducer {
 
     public void sendMessage(RequestDto message) {
         requestService.createRequestEquipment(message);
-        CachingConnectionFactory connectionFactory=new CachingConnectionFactory ("armadillo.rmq.cloudamqp.com");
-        connectionFactory.setUsername("ynpktdgu");
-        connectionFactory.setPassword("3sU73Ks3p2X7Yld2gqyP5GblOTpCDWR1");
-        connectionFactory.setVirtualHost("ynpktdgu");
+
+        ConnectionFactory connectionFactory = RabbitConfig.getConnection();
         //Set up the listener
         SimpleMessageListenerContainer container =
                 new SimpleMessageListenerContainer(connectionFactory);

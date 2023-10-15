@@ -23,6 +23,8 @@ public class RabbitMQListenerConfig {
         container.setQueueNames("push_notification_queue"); // Queue(s) to listen to
         container.setMessageListener(pushNotificationConsume);
 
+        container.stop();
+
         return container;
     }
 }

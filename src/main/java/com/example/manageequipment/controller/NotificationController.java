@@ -20,13 +20,13 @@ public class NotificationController {
     @PostMapping("/get-notification/{userId}")
     public ResponseEntity<List<NotificationDto>> getNotification(@PathVariable Long userId) {
         return new ResponseEntity<>(notificationService.getNotification(userId), HttpStatus.OK);
-    }
-
-    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    }    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @PostMapping("/read-notification/{notificationId}")
     public ResponseEntity<NotificationDto> readNotification(@PathVariable Long notificationId) {
         return new ResponseEntity<>(notificationService.readNotification(notificationId), HttpStatus.OK);
     }
+
+
 
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @PostMapping("/read-all-notification/{userId}")

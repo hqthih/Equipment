@@ -39,12 +39,12 @@ public class RabbitConfig {
     @Bean
     public static ConnectionFactory getConnection() {
 
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++");
         // set up the connection
-        CachingConnectionFactory connectionFactory=new CachingConnectionFactory ("armadillo.rmq.cloudamqp.com");
-        connectionFactory.setUsername("ynpktdgu");
-        connectionFactory.setPassword("3sU73Ks3p2X7Yld2gqyP5GblOTpCDWR1");
-        connectionFactory.setVirtualHost("ynpktdgu");
+        CachingConnectionFactory connectionFactory=new CachingConnectionFactory ("octopus.rmq3.cloudamqp.com");
+        connectionFactory.setUsername("bcxbdenu");
+        connectionFactory.setPassword("ZJq-r5HDeY5b_FXZiRZoUG8ZEHaECX4L");
+        connectionFactory.setVirtualHost("bcxbdenu");
+
 
         //Recommended settings
         connectionFactory.setRequestedHeartBeat(30);
@@ -59,6 +59,7 @@ public class RabbitConfig {
         admin.declareBinding(
                 BindingBuilder.bind(queue).to(exchange).with("push_notification_key"));
 
+        connectionFactory.stop();
         return connectionFactory;
     }
 }
