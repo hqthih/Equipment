@@ -120,7 +120,7 @@ public class PushNotificationConsume implements MessageListener {
             Request request = requestRepository.findById((Long.valueOf(requestId))).get();
 
             NotificationDto notificationDto = new NotificationDto();
-            notificationDto.setDescription("Admin reject your request for "+request.getRequestEquipmentType().getName());
+            notificationDto.setDescription("Admin rejected your request for "+request.getRequestEquipmentType().getName());
             notificationDto.setUserOwnerId(request.getUserOwner().getId());
             notificationDto.setRead(false);
             notificationDto.setType("REQUEST");
@@ -128,7 +128,7 @@ public class PushNotificationConsume implements MessageListener {
 
             notificationService.createNotification(notificationDto);
             try {
-                fcmService.sendFCMNotification(request.getUserOwner().getDeviceToken(), "REQUEST", "Admin reject your request for "+request.getRequestEquipmentType().getName());
+                fcmService.sendFCMNotification(request.getUserOwner().getDeviceToken(), "REQUEST", "Admin rejected your request for "+request.getRequestEquipmentType().getName());
             } catch (FirebaseMessagingException e) {
                 throw new RuntimeException(e);
             }
