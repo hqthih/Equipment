@@ -56,4 +56,19 @@ public class RabbitMQProducer {
             Thread.currentThread().interrupt();
         }
     }
+
+    public void rejectRequestAndSendNotification(Long requestId) {
+        requestService.rejectRequestEquipment(requestId);
+
+        rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
+
+        TypeNotification typeNotification = new TypeNotification().builder().type("REJECT").content(requestId).build();
+
+        rabbitTemplate.convertAndSend("equipment_exchange", "push_notification_key", typeNotification);
+        try{
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 }

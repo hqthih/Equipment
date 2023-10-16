@@ -43,7 +43,8 @@ public class RequestController {
     @PostMapping("/reject-request/{requestId}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<String> rejectRequestEquipment(@PathVariable Long requestId) {
-        return new ResponseEntity<>(requestService.rejectRequestEquipment(requestId), HttpStatus.OK);
+        producer.rejectRequestAndSendNotification(requestId);
+        return new ResponseEntity<>("Reject request success!!", HttpStatus.OK);
     }
 
     @PostMapping("/confirm-request/{requestId}")

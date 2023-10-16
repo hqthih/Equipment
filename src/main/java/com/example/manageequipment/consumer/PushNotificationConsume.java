@@ -99,22 +99,39 @@ public class PushNotificationConsume implements MessageListener {
             Request request = requestRepository.findById((Long.valueOf(requestId))).get();
 
             NotificationDto notificationDto = new NotificationDto();
-            notificationDto.setDescription("Admin was confirm your request!");
+            notificationDto.setDescription("Admin confirmed your request for "+request.getRequestEquipmentType().getName());
             notificationDto.setUserOwnerId(request.getUserOwner().getId());
             notificationDto.setRead(false);
-            notificationDto.setType("CONFIRM");
+            notificationDto.setType("REQUEST");
             notificationDto.setCreatedAt(new Date());
 
             notificationService.createNotification(notificationDto);
             try {
-                fcmService.sendFCMNotification(request.getUserOwner().getDeviceToken(), "REQUEST", "Admin was confirm your request!");
+                fcmService.sendFCMNotification(request.getUserOwner().getDeviceToken(), "REQUEST", "Admin confirmed your request for "+request.getRequestEquipmentType().getName());
             } catch (FirebaseMessagingException e) {
                 throw new RuntimeException(e);
             }
-
-//            Long requestId = (Long) typeNotification.getContent();
-//            System.out.println("Request Id :" + requestId);
         }
 
+        if (typeNotification.getType().equals("REJECT")) {
+
+            String requestId = new String(String.valueOf(typeNotification.getContent()));
+
+            Request request = requestRepository.findById((Long.valueOf(requestId))).get();
+
+            NotificationDto notificationDto = new NotificationDto();
+            notificationDto.setDescription("Admin reject your request for "+request.getRequestEquipmentType().getName());
+            notificationDto.setUserOwnerId(request.getUserOwner().getId());
+            notificationDto.setRead(false);
+            notificationDto.setType("REQUEST");
+            notificationDto.setCreatedAt(new Date());
+
+            notificationService.createNotification(notificationDto);
+            try {
+                fcmService.sendFCMNotification(request.getUserOwner().getDeviceToken(), "REQUEST", "Admin reject your request for "+request.getRequestEquipmentType().getName());
+            } catch (FirebaseMessagingException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
