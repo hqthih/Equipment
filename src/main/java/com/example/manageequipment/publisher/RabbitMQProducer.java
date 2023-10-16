@@ -2,6 +2,7 @@ package com.example.manageequipment.publisher;
 
 import com.example.manageequipment.config.RabbitConfig;
 import com.example.manageequipment.dto.RequestDto;
+import com.example.manageequipment.dto.TypeNotification;
 import com.example.manageequipment.service.RequestService;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -25,21 +26,34 @@ public class RabbitMQProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(RequestDto message) {
+    public void createRequestAndSendNotification(RequestDto message) {
         System.out.println("connection from RabbitMQProducer");
         requestService.createRequestEquipment(message);
 
-//        ConnectionFactory connectionFactory = RabbitConfig.getConnection();
-
-//        RabbitTemplate template = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
 
-        rabbitTemplate.convertAndSend("equipment_exchange", "push_notification_key", message);
+        TypeNotification typeNotification = new TypeNotification().builder().type("REQUEST").content(message).build();
+
+        rabbitTemplate.convertAndSend("equipment_exchange", "push_notification_key", typeNotification);
         try{
             Thread.sleep(1000);
         } catch(InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
 
+    public void confirmRequestAndSendNotification(Long requestId) {
+        requestService.confirmRequestEquipment(requestId);
+
+        rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
+
+        TypeNotification typeNotification = new TypeNotification().builder().type("CONFIRM").content(requestId).build();
+
+        rabbitTemplate.convertAndSend("equipment_exchange", "push_notification_key", typeNotification);
+        try{
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

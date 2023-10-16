@@ -35,7 +35,7 @@ public class MessageController {
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @PostMapping("/firebase-test")
     public ResponseEntity<String> firebase(@RequestParam("tokenDevice") String tokenDevice ) throws FirebaseMessagingException {
-        fcmService.sendFCMNotification(tokenDevice);
+//        fcmService.sendFCMNotification(tokenDevice);
         return  ResponseEntity.ok("Message send to RabbitMQ");
     }
 }

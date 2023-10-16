@@ -31,8 +31,10 @@ public class RabbitConfig {
         RabbitAdmin admin = new RabbitAdmin(connectionFactory);
         Queue queue = new Queue("push_notification_queue");
         admin.declareQueue(queue);
+
         TopicExchange exchange = new TopicExchange("equipment_exchange");
         admin.declareExchange(exchange);
+
         admin.declareBinding(
                 BindingBuilder.bind(queue).to(exchange).with("push_notification_key"));
 

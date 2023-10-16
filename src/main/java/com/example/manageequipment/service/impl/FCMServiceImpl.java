@@ -18,10 +18,8 @@ import org.springframework.stereotype.Service;
 public class FCMServiceImpl implements FCMService  {
 
     @Override
-    public String sendFCMNotification(String tokenDevice) throws FirebaseMessagingException {
+    public String sendFCMNotification(String tokenDevice, String title, String body) throws FirebaseMessagingException {
         // Tạo một thông báo
-        String title = "Your Notification Title";
-        String body = "Your Notification Body";
         Message message = Message.builder()
                 .setNotification(new Notification(title, body))
                 .setToken(tokenDevice)

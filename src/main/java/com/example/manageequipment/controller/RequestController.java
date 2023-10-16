@@ -24,8 +24,8 @@ public class RequestController {
     @PostMapping("/create-request")
     @PreAuthorize("hasAnyAuthority('USER')")
     public ResponseEntity<String> createRequestEquipment(@RequestBody RequestDto requestDto) {
-        producer.sendMessage(requestDto);
-        return ResponseEntity.ok("Request is sent to Admin!!");
+        producer.createRequestAndSendNotification(requestDto);
+        return ResponseEntity.ok("Create request success!!");
     }
 
     @GetMapping("/get-request-by-user/{userId}")
@@ -49,7 +49,8 @@ public class RequestController {
     @PostMapping("/confirm-request/{requestId}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<String> confirmRequestEquipment(@PathVariable Long requestId) {
-        return new ResponseEntity<>(requestService.confirmRequestEquipment(requestId), HttpStatus.OK);
+        producer.confirmRequestAndSendNotification(requestId);
+        return new ResponseEntity<>("Confirm request success!!", HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-request")

@@ -6,5 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface FCMService {
-    String sendFCMNotification(String tokenDevice) throws FirebaseMessagingException;
+    String sendFCMNotification(String tokenDevice, String title, String body) throws FirebaseMessagingException;
+
 }
