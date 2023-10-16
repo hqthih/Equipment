@@ -16,7 +16,7 @@ public class NotificationController {
     @Autowired
     private NotificationService notificationService;
 
-    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN') or #userId == authentication.credentials")
     @PostMapping("/get-notification/{userId}")
     public ResponseEntity<List<NotificationDto>> getNotification(@PathVariable Long userId) {
         return new ResponseEntity<>(notificationService.getNotification(userId), HttpStatus.OK);
@@ -26,16 +26,14 @@ public class NotificationController {
         return new ResponseEntity<>(notificationService.readNotification(notificationId), HttpStatus.OK);
     }
 
-
-
-    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN') or #userId == authentication.credentials")
     @PostMapping("/read-all-notification/{userId}")
     public ResponseEntity<String> readAllNotification(@PathVariable Long userId) {
         notificationService.readAllNotification(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN') or #userId == authentication.credentials")
     @DeleteMapping("/clear-all-notification/{userId}")
     public ResponseEntity<String> clearAllNotification(@PathVariable Long userId) {
         notificationService.clearAllNotification(userId);

@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/create-device-token/{userId}/{deviceToken}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN') or #userId == authentication.credentials")
     public ResponseEntity<String> createDeviceToken(@PathVariable String deviceToken, @PathVariable Long userId) {
         userService.createDeviceToken(deviceToken, userId);
         return new ResponseEntity<>("Create device token success!!", HttpStatus.OK);
