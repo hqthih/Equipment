@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQListenerConfig {
-
-
+    private ConnectionFactory connectionFactory;
     private PushNotificationConsume pushNotificationConsume;
 
-    public RabbitMQListenerConfig(PushNotificationConsume pushNotificationConsume) {
+    public RabbitMQListenerConfig(ConnectionFactory connectionFactory,PushNotificationConsume pushNotificationConsume) {
+        this.connectionFactory = connectionFactory;
         this.pushNotificationConsume = pushNotificationConsume;
     }
 
@@ -20,11 +20,10 @@ public class RabbitMQListenerConfig {
     public SimpleMessageListenerContainer messageListenerContainer() {
         System.out.println("connection from ListenerConfig");
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(RabbitConfig.getConnection());
+        container.setConnectionFactory(connectionFactory);
+
         container.setQueueNames("push_notification_queue"); // Queue(s) to listen to
         container.setMessageListener(pushNotificationConsume);
-
-        container.stop();
 
         return container;
     }
