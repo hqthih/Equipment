@@ -3,6 +3,7 @@ package com.example.manageequipment.controller;
 import com.example.manageequipment.dto.EquipmentDto;
 import com.example.manageequipment.dto.UserDto;
 import com.example.manageequipment.model.Equipment;
+import com.example.manageequipment.publisher.RabbitMQProducer;
 import com.example.manageequipment.service.EquipmentService;
 import com.example.manageequipment.type.IntegerArrayRequest;
 
@@ -23,10 +24,12 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
+    @Autowired
+    private RabbitMQProducer producer;
+
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<EquipmentDto> createEquipment(@Valid @ModelAttribute EquipmentDto equipment, @ModelAttribute MultipartFile image) throws IOException {
-        System.out.println(equipment);
         return new ResponseEntity<>(equipmentService.createEquipment(equipment, image), HttpStatus.CREATED);
     }
 
@@ -61,7 +64,7 @@ public class EquipmentController {
 
     @PostMapping("/transfer/{userId}")
     public ResponseEntity<UserDto> transferEquipment(@RequestBody IntegerArrayRequest equipmentIds, @PathVariable Long userId) {
-        return new ResponseEntity<>(equipmentService.transferEquipment(equipmentIds.getIds(), userId), HttpStatus.OK);
+        return new ResponseEntity<>(producer.transferEquipmentAndSendNotification(equipmentIds.getIds(), userId), HttpStatus.OK);
     }
 
     @GetMapping("/request-equipment/{userId}")

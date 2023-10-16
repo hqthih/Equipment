@@ -133,5 +133,26 @@ public class PushNotificationConsume implements MessageListener {
                 throw new RuntimeException(e);
             }
         }
+
+        if (typeNotification.getType().equals("TRANSFER")) {
+
+            String userId = new String(String.valueOf(typeNotification.getContent()));
+
+            User user = userRepository.findById((Long.valueOf(userId))).get();
+
+            NotificationDto notificationDto = new NotificationDto();
+            notificationDto.setDescription("Admin trust transfer equipment for you ");
+            notificationDto.setUserOwnerId(user.getId());
+            notificationDto.setRead(false);
+            notificationDto.setType("EQUIPMENT");
+            notificationDto.setCreatedAt(new Date());
+
+            notificationService.createNotification(notificationDto);
+            try {
+                fcmService.sendFCMNotification(user.getDeviceToken(), "NEW EQUIPMENT", "Admin trust transfer equipment for you");
+            } catch (FirebaseMessagingException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
