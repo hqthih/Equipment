@@ -10,7 +10,7 @@ import java.util.List;
 public interface CategoryService {
     Category createCategory(Category category);
 
-//    List<CategoryDto> getCategoryName();
+    List<?> getCategoryName();
 
     Category updateCategory(Category category);
 

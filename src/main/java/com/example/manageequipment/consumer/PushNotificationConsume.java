@@ -107,7 +107,9 @@ public class PushNotificationConsume implements MessageListener {
 
             notificationService.createNotification(notificationDto);
             try {
-                fcmService.sendFCMNotification(request.getUserOwner().getDeviceToken(), "REQUEST", "Admin confirmed your request for "+request.getRequestEquipmentType().getName());
+                if (request.getUserOwner().getDeviceToken() != null) {
+                    fcmService.sendFCMNotification(request.getUserOwner().getDeviceToken(), "REQUEST", "Admin confirmed your request for "+request.getRequestEquipmentType().getName());
+                }
             } catch (FirebaseMessagingException e) {
                 throw new RuntimeException(e);
             }
@@ -128,7 +130,9 @@ public class PushNotificationConsume implements MessageListener {
 
             notificationService.createNotification(notificationDto);
             try {
-                fcmService.sendFCMNotification(request.getUserOwner().getDeviceToken(), "REQUEST", "Admin rejected your request for "+request.getRequestEquipmentType().getName());
+                if (request.getUserOwner().getDeviceToken() != null) {
+                    fcmService.sendFCMNotification(request.getUserOwner().getDeviceToken(), "REQUEST", "Admin rejected your request for "+request.getRequestEquipmentType().getName());
+                }
             } catch (FirebaseMessagingException e) {
                 throw new RuntimeException(e);
             }
@@ -149,7 +153,9 @@ public class PushNotificationConsume implements MessageListener {
 
             notificationService.createNotification(notificationDto);
             try {
-                fcmService.sendFCMNotification(user.getDeviceToken(), "NEW EQUIPMENT", "Admin trust transfer equipment for you");
+                if (user.getDeviceToken() != null) {
+                    fcmService.sendFCMNotification(user.getDeviceToken(), "NEW EQUIPMENT", "Admin trust transfer equipment for you");
+                }
             } catch (FirebaseMessagingException e) {
                 throw new RuntimeException(e);
             }

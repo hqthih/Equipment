@@ -29,11 +29,11 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.createCategory(category), HttpStatus.CREATED);
     }
 
-//    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
-//    @GetMapping("/get-category-name")
-//    public ResponseEntity<List<CategoryDto>> getCategory(){
-//        return new ResponseEntity<>(categoryService.getCategoryName(), HttpStatus.CREATED);
-//    }
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @GetMapping("/get-category-name")
+    public ResponseEntity<List<?>> getCategory(){
+        return new ResponseEntity<>(categoryService.getCategoryName(), HttpStatus.CREATED);
+    }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping("/get-category")

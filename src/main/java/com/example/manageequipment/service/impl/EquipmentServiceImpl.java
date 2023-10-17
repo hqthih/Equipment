@@ -10,6 +10,7 @@ import com.example.manageequipment.model.User;
 import com.example.manageequipment.repository.CategoryRepository;
 import com.example.manageequipment.repository.EquipmentRepository;
 import com.example.manageequipment.repository.UserRepository;
+import com.example.manageequipment.repository.impl.EquipmentRepoImpl;
 import com.example.manageequipment.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,9 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private EquipmentRepoImpl equipmentRepo;
 
 
     public EquipmentDto mapToDto(Equipment equipment) {
@@ -115,24 +119,22 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
     }
 
-
     @Override
     public List<EquipmentDto> getAllEquipment(String name) {
-        List<Equipment> equipmentList = equipmentRepository.findByNameContaining(name);
-        List<EquipmentDto> equipmentDtos = new ArrayList<>();
-        equipmentList.forEach(e -> equipmentDtos.add(mapToDto(e)));
+        List<EquipmentDto> equipmentList = equipmentRepo.getAllEquipment();
+//        List<EquipmentDto> equipmentDtos = new ArrayList<>();
+//        equipmentList.forEach(e -> equipmentDtos.add(mapToDto(e)));
 
-        return equipmentDtos;
+        return equipmentList;
     }
     @Override
     public List<EquipmentDto> getEquipmentByOwnerId(int ownerId) {
-        List<Equipment> equipmentList = equipmentRepository.findByOwnerId(ownerId);
-        List<EquipmentDto> equipmentDtos = new ArrayList<>();
-        equipmentList.forEach(e -> equipmentDtos.add(mapToDto(e)));
+        List<EquipmentDto> equipmentList = equipmentRepo.getEquipmentForUser(ownerId);
+//        List<EquipmentDto> equipmentDtos = new ArrayList<>();
+//        equipmentList.forEach(e -> equipmentDtos.add(mapToDto(e)));
 
-        return equipmentDtos;
+        return equipmentList;
     }
-
 
     @Override
     public EquipmentDto updateEquipment(Long equipmentId, EquipmentDto equipmentDto, MultipartFile image) throws IOException {
@@ -143,11 +145,11 @@ public class EquipmentServiceImpl implements EquipmentService {
             equipment.setName(equipmentDto.getName());
         }
 
-//        if (equipmentDto.getType() != null) {
-//            Category category = categoryRepository.findById(equipmentDto.getType()).get();
-//
-//            equipment.setType(category);
-//        }
+        if (equipmentDto.getType() != null) {
+            Category category = categoryRepository.findById(equipmentDto.getType()).get();
+
+            equipment.setType(category);
+        }
 
         if (equipmentDto.getDescription() != null) {
             equipment.setDescription(equipmentDto.getDescription());

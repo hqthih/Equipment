@@ -36,64 +36,6 @@ public class ManageEquipmentApplication {
         return cloudinary;
     }
 
-
-//    @Bean
-//    public static Connection getConnection() {
-//        if (connection == null) {
-//            try {
-//                ConnectionFactory connectionFactory = new ConnectionFactory();
-//                connection = connectionFactory.newConnection("amqp://guest:guest@localhost:5672/");
-//            } catch (IOException | TimeoutException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return connection;
-//    }
-//
-//
-//    @Bean
-//    public static void createExchange() throws IOException, TimeoutException {
-//
-//        ConnectionFactory factory = new ConnectionFactory();
-//        Connection connection = factory.newConnection("amqp://guest:guest@localhost:5672/");
-//        Channel channel = connection.createChannel();
-//
-//        channel.exchangeDeclare("my-direct-exchange", BuiltinExchangeType.DIRECT, true);
-//        channel.close();
-//        connection.close();
-//    }
-//
-//    @Bean
-//    public static void createQueue() throws IOException, TimeoutException {
-//
-//        ConnectionFactory factory = new ConnectionFactory();
-//        Connection connection = factory.newConnection("amqps://inevcdrz:0k3hTtvlLOk9lNlpA4Ni1P72ZIuquqNK@armadillo.rmq.cloudamqp.com/inevcdrz");
-//        Channel channel = connection.createChannel();
-//
-//        //Create the Queues
-//        channel.queueDeclare("MobileQ", true, false, false, null);
-//        channel.queueDeclare("ACQ", true, false, false, null);
-//        channel.queueDeclare("LightQ", true, false, false, null);
-//
-//        channel.close();
-//        connection.close();
-//    }
-//
-//    @Bean
-//    public static void createBinding() throws IOException, TimeoutException {
-//
-//        ConnectionFactory connectionFactory = new ConnectionFactory();
-//        Connection connection = connectionFactory.newConnection("amqps://inevcdrz:0k3hTtvlLOk9lNlpA4Ni1P72ZIuquqNK@armadillo.rmq.cloudamqp.com/inevcdrz");
-//        try (Channel channel = connection.createChannel()) {
-//            //Create bindings - (queue, exchange, routingKey)
-//            channel.queueBind("MobileQ", "my-direct-exchange", "personalDevice");
-//            channel.queueBind("ACQ", "my-direct-exchange", "homeAppliance");
-//            channel.queueBind("LightQ", "my-direct-exchange", "homeAppliance");
-//        }
-//        connection.close();
-//    }
-
-
     @Bean
     BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

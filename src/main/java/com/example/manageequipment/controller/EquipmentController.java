@@ -3,7 +3,9 @@ package com.example.manageequipment.controller;
 import com.example.manageequipment.dto.EquipmentDto;
 import com.example.manageequipment.dto.UserDto;
 import com.example.manageequipment.model.Equipment;
+import com.example.manageequipment.model.User;
 import com.example.manageequipment.publisher.RabbitMQProducer;
+import com.example.manageequipment.repository.impl.EquipmentRepoImpl;
 import com.example.manageequipment.service.EquipmentService;
 import com.example.manageequipment.type.IntegerArrayRequest;
 
@@ -23,6 +25,9 @@ import java.util.List;
 public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
+
+    @Autowired
+    private EquipmentRepoImpl equipmentRepo;
 
     @Autowired
     private RabbitMQProducer producer;
@@ -47,6 +52,14 @@ public class EquipmentController {
             @RequestParam(value = "ownerId", defaultValue = "", required = false) int ownerId
     ) {
         return new ResponseEntity<>(equipmentService.getEquipmentByOwnerId(ownerId), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @GetMapping("/get-transfered-user")
+    public ResponseEntity<List<UserDto>> getTransferedUser(
+            @RequestParam(value = "equipmentId", defaultValue = "", required = false) int equipmentId
+    ) {
+        return new ResponseEntity<>(equipmentRepo.getTransferedEquipment(equipmentId), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")

@@ -2,6 +2,7 @@ package com.example.manageequipment.service;
 
 import com.example.manageequipment.dto.EquipmentDto;
 import com.example.manageequipment.dto.UserDto;
+import com.example.manageequipment.model.Equipment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,12 +1,11 @@
 package com.example.manageequipment.service.impl;
 
-import com.example.manageequipment.dto.CategoryDto;
 import com.example.manageequipment.model.Category;
 import com.example.manageequipment.repository.CategoryRepository;
 import com.example.manageequipment.repository.EquipmentRepository;
 import com.example.manageequipment.repository.RequestRepository;
+import com.example.manageequipment.repository.impl.CategoryRepoImpl;
 import com.example.manageequipment.service.CategoryService;
-import com.example.manageequipment.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,6 +24,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     RequestRepository requestRepository;
 
+    @Autowired
+    CategoryRepoImpl categoryRepo;
+
     @Override
     public Category createCategory(Category cate) {
         Category category = new Category();
@@ -35,14 +37,12 @@ public class CategoryServiceImpl implements CategoryService {
         return newCategory;
     }
 
-//    @Override
-//    public List<CategoryDto> getCategoryName() {
-//        List<CategoryDto> listCategory = categoryRepository.getNameOfCategory();
-//
-//        System.out.println();
-//
-//        return null;
-//    }
+    @Override
+    public List<?> getCategoryName() {
+        List<?> listCategory = categoryRepo.getNameOfCategory();
+
+        return listCategory;
+    }
 
     @Override
     public Category updateCategory(Category newCategory) {
