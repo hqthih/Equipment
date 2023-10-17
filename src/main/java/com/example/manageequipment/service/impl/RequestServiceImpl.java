@@ -9,6 +9,7 @@ import com.example.manageequipment.repository.CategoryRepository;
 import com.example.manageequipment.repository.EquipmentRepository;
 import com.example.manageequipment.repository.RequestRepository;
 import com.example.manageequipment.repository.UserRepository;
+import com.example.manageequipment.repository.impl.RequestRepoImpl;
 import com.example.manageequipment.service.EquipmentService;
 import com.example.manageequipment.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class RequestServiceImpl implements RequestService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    RequestRepoImpl requestRepo;
 
     public RequestDto mapToDto(Request request) {
         RequestDto requestDto = new RequestDto();
@@ -75,27 +79,16 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<RequestDto> getRequestEquipmentByUserId(Long userId) {
-        User userOwner = userRepository.findById(userId).get();
-        List<Request> listRequest = requestRepository.findByUserOwner(userOwner);
-        List<RequestDto> listRequestDto = new ArrayList<>();
+        List<RequestDto> listRequest = requestRepo.getRequestByUserId(userId);
 
-        listRequest.forEach(request -> {
-            listRequestDto.add(mapToDto(request));
-        });
-
-        return listRequestDto;
+        return listRequest;
     }
 
     @Override
     public List<RequestDto> getAllRequestEquipment() {
-        List<Request> listRequest = requestRepository.findAll();
-        List<RequestDto> listRequestDto = new ArrayList<>();
+        List<RequestDto> listRequest = requestRepo.getAllRequest();
 
-        listRequest.forEach(request -> {
-            listRequestDto.add(mapToDto(request));
-        });
-
-        return listRequestDto;
+        return listRequest;
     }
 
     @Override
