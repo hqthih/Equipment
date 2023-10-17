@@ -20,6 +20,7 @@ public class RequestRepoImpl {
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("user_id", userId);
 
+
         List<Object[]> result = query.getResultList();
         List<RequestDto> requestDtos = new ArrayList<>();
         for (Object[] row : result) {
