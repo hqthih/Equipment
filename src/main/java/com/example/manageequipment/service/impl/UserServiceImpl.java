@@ -7,6 +7,7 @@ import com.example.manageequipment.model.User;
 import com.example.manageequipment.repository.EquipmentRepository;
 import com.example.manageequipment.repository.RoleCustomRepo;
 import com.example.manageequipment.repository.UserRepository;
+import com.example.manageequipment.repository.impl.UserRepoImpl;
 import com.example.manageequipment.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService {
     RoleCustomRepo roleRepository;
 
     @Autowired
+    UserRepoImpl userRepo;
+
+    @Autowired
     EquipmentRepository equipmentRepository;
     private final PasswordEncoder passwordEncoder;
     public UserServiceImpl(PasswordEncoder passwordEncoder) {
@@ -42,16 +46,6 @@ public class UserServiceImpl implements UserService {
         userDto.setAddress(user.getAddress());
         userDto.setRole(user.getRole().getName());
         userDto.setDeviceToken(user.getDeviceToken());
-
-
-        List<Long> equipmentIds = new ArrayList<>();
-        user.getEquipments().forEach(e -> equipmentIds.add(e.getId()));
-
-        List<Long> transferredEquipIds = new ArrayList<>();
-        user.getTransferredEquipment().forEach(e -> transferredEquipIds.add(e.getId()));
-
-        userDto.setEquipmentIds(equipmentIds);
-        userDto.setTransferredEquipIds(transferredEquipIds);
         return userDto;
     }
 
@@ -104,15 +98,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getUsers() {
-        List<User> users = userRepository.findAll();
+        List<UserDto> users = userRepo.getAllUser();
 
-        List<UserDto> listUser = new ArrayList<>();
-
-        users.forEach(u -> {
-            listUser.add(mapToDto((u)));
-        });
-
-        return listUser;
+        return users;
     }
 
     @Override

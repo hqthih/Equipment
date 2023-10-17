@@ -16,7 +16,7 @@ public class EquipmentRepoImpl {
     private EntityManager entityManager;
 
     public List<EquipmentDto> getEquipmentForUser(int ownerId) {
-        String sqlQuery = "SELECT e.id, e.name, e.image_url, e.owner_id, e.category_id FROM equipment e WHERE e.owner_id = :owner_id";
+        String sqlQuery = "SELECT e.id, e.name, e.image_url, e.owner_id, e.category_id, e.description FROM equipment e WHERE e.owner_id = :owner_id";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("owner_id", ownerId);
 
@@ -31,6 +31,10 @@ public class EquipmentRepoImpl {
             }
             equipmentDto.setOwnerId(Long.valueOf(row[3].toString()));
             equipmentDto.setType(Long.valueOf(row[4].toString()));
+            if (row[5] != null) {
+                equipmentDto.setDescription(row[5].toString());
+            }
+
             equipmentDtos.add(equipmentDto);
         }
 
@@ -38,7 +42,7 @@ public class EquipmentRepoImpl {
     }
 
     public List<EquipmentDto> getAllEquipment() {
-        String sqlQuery = "SELECT e.id, e.name, e.image_url, e.owner_id, e.category_id FROM equipment e";
+        String sqlQuery = "SELECT e.id, e.name, e.image_url, e.owner_id, e.category_id, e.description FROM equipment e";
         Query query = entityManager.createNativeQuery(sqlQuery);
 
         List<Object[]> result = query.getResultList();
@@ -52,13 +56,16 @@ public class EquipmentRepoImpl {
             }
             equipmentDto.setOwnerId(Long.valueOf(row[3].toString()));
             equipmentDto.setType(Long.valueOf(row[4].toString()));
+            if (row[5] != null) {
+                equipmentDto.setDescription(row[5].toString());
+            }
             equipmentDtos.add(equipmentDto);
         }
 
         return equipmentDtos;
     }
 
-    public List<UserDto> getTransferedEquipment(int equipmentId) {
+    public List<UserDto> getTransferedUser(int equipmentId) {
         String sqlQuery = "SELECT u.id, u.address, u.email, u.first_name, u.last_name FROM user u " +
                 "LEFT JOIN transfer_history t ON u.id = t.user_id WHERE t.equipment_id = :equipment_id";
         Query query = entityManager.createNativeQuery(sqlQuery);

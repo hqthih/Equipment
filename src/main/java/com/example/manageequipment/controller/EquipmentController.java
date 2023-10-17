@@ -59,7 +59,7 @@ public class EquipmentController {
     public ResponseEntity<List<UserDto>> getTransferedUser(
             @RequestParam(value = "equipmentId", defaultValue = "", required = false) int equipmentId
     ) {
-        return new ResponseEntity<>(equipmentRepo.getTransferedEquipment(equipmentId), HttpStatus.OK);
+        return new ResponseEntity<>(equipmentRepo.getTransferedUser(equipmentId), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")

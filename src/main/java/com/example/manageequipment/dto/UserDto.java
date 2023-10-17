@@ -16,8 +16,6 @@ public class UserDto {
     private String lastName;
     private String address;
     private String email;
-    private List<Long> equipmentIds;
-    private List<Long> transferredEquipIds;
     private String role;
     private String deviceToken;
 }
