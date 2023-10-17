@@ -5,6 +5,7 @@ import com.example.manageequipment.model.Notification;
 import com.example.manageequipment.model.User;
 import com.example.manageequipment.repository.NotificationRepository;
 import com.example.manageequipment.repository.UserRepository;
+import com.example.manageequipment.repository.impl.NotificationRepoImpl;
 import com.example.manageequipment.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private NotificationRepoImpl notificationRepo;
 
     public NotificationDto mapToDto(Notification notification) {
         NotificationDto notificationDto = new NotificationDto();
@@ -56,16 +60,9 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<NotificationDto> getNotification(Long userId) {
 
-        User userOwner = userRepository.findById(userId).get();
+        List<NotificationDto> notificationList = notificationRepo.getAllNotificationDesc(userId);
 
-        List<Notification> notificationList = notificationRepository.findByUserOwnerOrderByCreatedAtDesc(userOwner);
-
-        List<NotificationDto> notificationDtos = new ArrayList<>();
-        notificationList.forEach(noti -> {
-            notificationDtos.add(mapToDto(noti));
-        });
-
-        return notificationDtos;
+        return notificationList;
     }
 
     @Override

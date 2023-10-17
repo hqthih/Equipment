@@ -16,7 +16,7 @@ public class RequestRepoImpl {
     private EntityManager entityManager;
 
     public List<RequestDto> getRequestByUserId(Long userId) {
-        String sqlQuery = "SELECT r.id, r.description, r.state, r.category_id, r.user_id FROM request r WHER r.user_id = :user_id";
+        String sqlQuery = "SELECT r.id, r.description, r.state, r.category_id, r.user_id FROM request r WHERE r.user_id = :user_id";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("user_id", userId);
 
