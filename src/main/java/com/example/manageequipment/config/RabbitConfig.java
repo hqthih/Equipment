@@ -5,6 +5,7 @@ import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -32,7 +33,7 @@ public class RabbitConfig {
         Queue queue = new Queue("push_notification_queue");
         admin.declareQueue(queue);
 
-        TopicExchange exchange = new TopicExchange("equipment_exchange");
+        DirectExchange exchange = new DirectExchange("equipment_exchange");
         admin.declareExchange(exchange);
 
         admin.declareBinding(
