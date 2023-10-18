@@ -29,8 +29,12 @@ public class EquipmentRepoImpl {
             if (row[2] != null) {
                 equipmentDto.setImageUrl(row[2].toString());
             }
-            equipmentDto.setOwnerId(Long.valueOf(row[3].toString()));
-            equipmentDto.setType(Long.valueOf(row[4].toString()));
+            if (row[3] != null) {
+                equipmentDto.setOwnerId(Long.valueOf(row[3].toString()));
+            }
+            if (row[4] != null) {
+                equipmentDto.setType(Long.valueOf(row[4].toString()));
+            }
             if (row[5] != null) {
                 equipmentDto.setDescription(row[5].toString());
             }
@@ -54,8 +58,12 @@ public class EquipmentRepoImpl {
             if (row[2] != null) {
                 equipmentDto.setImageUrl(row[2].toString());
             }
-            equipmentDto.setOwnerId(Long.valueOf(row[3].toString()));
-            equipmentDto.setType(Long.valueOf(row[4].toString()));
+            if (row[3] != null) {
+                equipmentDto.setOwnerId(Long.valueOf(row[3].toString()));
+            }
+            if (row[4] != null) {
+                equipmentDto.setType(Long.valueOf(row[4].toString()));
+            }
             if (row[5] != null) {
                 equipmentDto.setDescription(row[5].toString());
             }
