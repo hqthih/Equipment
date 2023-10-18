@@ -33,7 +33,7 @@ public class RabbitConfig {
         Queue queue = new Queue("push_notification_queue");
         admin.declareQueue(queue);
 
-        DirectExchange exchange = new DirectExchange("equipment_exchange");
+        TopicExchange exchange = new TopicExchange("equipment_exchange");
         admin.declareExchange(exchange);
 
         admin.declareBinding(
